@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rute Ambulance Tercepat</title>
+  
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
+  
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="sidebar">
+    <h1>Rute Ambulance</h1>
+    <div class="tool-box">
+      <p>Temukan RS (UGD) Terdekat:</p>
+      
+      <button id="btn-location" class="btn primary-btn">
+        📍 Deteksi Lokasi Saya
+      </button>
+      
+      <p class="text-sm">atau klik pada peta untuk memilih titik kejadian secara manual.</p>
+      
+      <button id="btn-reset" class="btn secondary-btn">
+        🔄 Reset Peta
+      </button>
+    </div>
+  </div>
+
+  <div id="map-container">
+    <div id="map"></div>
+    
+    <div id="loading-overlay" class="hidden">
+      <div class="spinner"></div>
+      <p class="loading-text">Mencari rute tercepat...</p>
+    </div>
+  </div>
+
+  <div id="toast" class="toast hidden"></div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
+  <script src="script.js"></script>
+
+</body>
+</html>

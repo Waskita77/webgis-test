@@ -1,0 +1,155 @@
+* { box-sizing: border-box; }
+
+body, html {
+  margin: 0; padding: 0; width: 100%; height: 100%; 
+  overflow: hidden;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f4f4f9;
+}
+
+/* Sidebar menempel di kiri */
+.sidebar {
+  position: absolute;
+  top: 0; left: 0; bottom: 0;
+  width: 320px;
+  background-color: #5a2ca0;
+  color: white;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 2px 0 5px rgba(0,0,0,0.2);
+  z-index: 2000;
+}
+
+/* Map Container mengisi sisa layar di kanan */
+#map-container {
+  position: absolute;
+  top: 0; left: 320px; right: 0; bottom: 0;
+  z-index: 1000;
+}
+
+#map { width: 100%; height: 100%; }
+
+.sidebar h1 { font-size: 22px; margin: 0 0 20px 0; text-align: center; }
+.tool-box { background-color: rgba(255, 255, 255, 0.1); border-radius: 8px; padding: 20px 15px; display: flex; flex-direction: column; gap: 15px; }
+.tool-box p { margin: 0; font-size: 15px; font-weight: 500; }
+.text-sm { font-size: 13px !important; text-align: center; color: #d1c4e9; font-weight: normal !important; }
+.btn { border: none; padding: 12px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 14px; transition: all 0.2s ease; width: 100%; }
+.primary-btn { background-color: #ffca28; color: #333; }
+.primary-btn:hover { background-color: #ffb300; transform: translateY(-2px); }
+.secondary-btn { background-color: transparent; border: 1px solid #d1c4e9; color: white; }
+.secondary-btn:hover { background-color: rgba(255, 255, 255, 0.1); }
+
+/* --- TAMPILAN PANEL RUTE UMUM --- */
+.leaflet-routing-container { 
+  background-color: rgba(255, 255, 255, 0.95) !important;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  max-height: 50vh; 
+  overflow-y: auto; 
+  color: #333;
+  margin-right: 15px !important;
+  transition: max-height 0.3s ease, width 0.3s ease;
+  border: none !important; /* Matikan border bawaan */
+}
+
+/* Wadah saat tersembunyi */
+.leaflet-routing-container-hide {
+  padding: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important; /* Hapus sisa kotak abu-abu */
+}
+
+/* --- CUSTOM TOMBOL BELOKAN (DESKTOP) --- */
+.leaflet-routing-collapse-btn {
+  /* Pakai shorthand 'background' untuk mematikan sisa background-image bawaan Leaflet */
+  background: #ffca28 !important; 
+  display: none !important; /* Sembunyikan di desktop */
+  align-items: center;
+  justify-content: center;
+  width: 35px !important;
+  height: 35px !important;
+  border-radius: 8px;
+  text-decoration: none;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3) !important;
+  border: none !important;
+}
+
+/* Icon saat panel TERBUKA (X untuk menutup) */
+.leaflet-routing-collapse-btn::after {
+  content: "✖️"; 
+  font-size: 14px;
+}
+
+/* Icon saat panel TERTUTUP (Peta untuk membuka) */
+.leaflet-routing-container-hide .leaflet-routing-collapse-btn::after {
+  content: "🗺️"; 
+  font-size: 18px;
+}
+
+/* Gaya untuk Nama RS (Tooltip) */
+.hospital-label {
+  background-color: rgba(255, 255, 255, 0.9);
+  border: 1px solid #5a2ca0;
+  color: #5a2ca0;
+  font-weight: bold;
+  font-size: 12px;
+  padding: 3px 6px;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+#loading-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(255, 255, 255, 0.85); z-index: 3000; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+#loading-overlay.hidden { display: none; }
+.spinner { border: 5px solid #e0e0e0; border-top: 5px solid #5a2ca0; border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; }
+.loading-text { margin-top: 15px; font-weight: bold; color: #5a2ca0; }
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+/* Base class toast */
+.toast { position: relative; padding: 12px 20px; border-radius: 8px; color: white; font-weight: bold; font-size: 14px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+.toast.success { background-color: #2e7d32; }
+.toast.error { background-color: #d32f2f; }
+.toast.info { background-color: #1976d2; }
+
+/* --- RESPONSIVITAS MOBILE --- */
+@media (max-width: 768px) {
+  .sidebar { top: auto; bottom: 0; width: 100%; height: auto; padding: 15px; border-top-left-radius: 15px; border-top-right-radius: 15px; }
+  #map-container { left: 0; bottom: 200px; }
+  
+  /* Perbaikan Tombol di HP */
+  .leaflet-routing-collapse-btn {
+    display: flex !important;
+    width: 45px !important;    
+    height: 45px !important;   
+    background: #ffca28 !important; /* Paksa override lagi di HP */
+    border: 3px solid white !important;   
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4) !important; 
+  }
+
+  .leaflet-routing-collapse-btn::after {
+    font-size: 16px;
+  }
+
+  .leaflet-routing-container-hide .leaflet-routing-collapse-btn::after {
+    font-size: 24px;
+  }
+  
+  /* Saat Panel TERBUKA di HP */
+  .leaflet-routing-container:not(.leaflet-routing-container-hide) { 
+    max-height: 25vh !important; 
+    width: 280px !important;     
+    margin-right: calc(50vw - 140px) !important; 
+    margin-top: 15px !important;
+  }
+  
+  /* Saat Panel TERTUTUP di HP */
+  .leaflet-routing-container-hide {
+    margin-right: 15px !important; 
+    margin-top: 15px !important;
+    width: 53px !important;  /* Sesuaikan lebar wadah dengan lebar tombol */
+    height: 53px !important; /* Sesuaikan tinggi wadah dengan tinggi tombol */
+    overflow: hidden !important; /* <--- TAMBAHKAN BARIS INI BIAR GAK MUNCUL SLIDER */
+  }
+}
